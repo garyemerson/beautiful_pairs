@@ -13,25 +13,24 @@ fn main() {
         .map(|s| s.parse::<i32>().unwrap())
         .collect();
 
-    let mut hash_b = HashMap::new();
-    for val in nums_b.iter() {
+    let mut hash_b: HashMap<i32, i32> = HashMap::new();
+    for val in nums_b.into_iter() {
         let x = hash_b.entry(val).or_insert(0);
         *x += 1;
     }
 
-    // println!("nums_a: {:?}", nums_a);
-    // println!("nums_b: {:?}", nums_b);
-    // println!("hash_b: {:?}", hash_b);
-
     let mut num_pairs = 0;
     for a in &nums_a {
-        match hash_b.entry(a) {
-            Entry::Vacant(_) => {},
-            Entry::Occupied(ref entry) if *entry.get() == 0 => {},
+        match hash_b.entry(*a) {
             Entry::Occupied(mut entry) => {
+                if *entry.get() == 1 {
+                    entry.remove();
+                } else {
+                    *entry.get_mut() -= 1;
+                }
                 num_pairs += 1;
-                *entry.get_mut() -= 1;
             },
+            Entry::Vacant(_) => {},
         }
     }
 
