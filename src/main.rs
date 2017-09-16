@@ -36,7 +36,7 @@ fn main() {
     }
 
     if num_pairs == nums_a.len() {
-        println!("{}", nums_a.len());
+        println!("{}", nums_a.len() - 1);
     } else {
         println!("{}", num_pairs + 1);
     }
